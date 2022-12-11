@@ -21,7 +21,7 @@ class Sprite {
   }
 
   draw() {
-    c.drawImage(this.image, -700, -110);
+    c.drawImage(this.image, this.position.x, this.position.y );
   }
 }
 
@@ -62,6 +62,10 @@ function animate() {
     playerImage.width / 4,
     playerImage.height
   );
+}
+
+if(keys.w.pressed) {
+  background.position.y = background.y + 3
 }
 
 animate();

@@ -14,25 +14,26 @@ image.src = "./map/town.png";
 const playerImage = new Image();
 playerImage.src = "./img/playerDown (1).png";
 
+
+
 class Sprite {
-  constructor({ position, image }) {
+  constructor({ position, velocity, image }) {
     this.position = position;
     this.image = image;
   }
 
   draw() {
-    c.drawImage(this.image, this.position.X, this.position.Y);
+    c.drawImage(this.image, this.position.x, this.position.y );
   }
 }
 
 const background = new Sprite({
   position: {
-    X: -700,
-    Y: -111,
+    x: -700,
+    y: -111,
   },
   image: image,
 });
-
 
 const keys = {
   w: {
@@ -58,18 +59,19 @@ function animate() {
     0,
     playerImage.width / 4,
     playerImage.height,
-    695,
-    500,
+    canvas.width / 2.1,
+    canvas.height / 1.44,
     playerImage.width / 4,
     playerImage.height
   );
+  if (keys.w.pressed) background.position.y += 3
+  else if (keys.a.pressed) background.position.x += 3
+  else if (keys.s.pressed) background.position.y -= 3
+  else if (keys.d.pressed) background.position.x -= 3
 }
 
-animate();
+animate()
 
-if (keys.w.pressed) {
-  background.position.y = background.position.y + 3
-}
 
 window.addEventListener('keydown', (e) => {
 switch (e.key) {
@@ -77,10 +79,10 @@ switch (e.key) {
   keys.w.pressed = true
   break
   case 'a':
-  keys.s.pressed = true
+  keys.a.pressed = true
   break
   case 's':
-  keys.d.pressed = true
+  keys.s.pressed = true
   break
   case 'd':
   keys.d.pressed = true

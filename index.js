@@ -21,7 +21,7 @@ class Sprite {
   }
 
   draw() {
-    c.drawImage(this.image, this.position.x, this.position.y );
+    c.drawImage(this.image, this.position.x, this.position.y);
   }
 }
 
@@ -64,8 +64,8 @@ function animate() {
   );
 }
 
-if(keys.w.pressed) {
-  background.position.y = background.y + 3
+if (keys.w.pressed) {
+  background.position.y = background.position.y + 3
 }
 
 animate();
@@ -103,3 +103,4 @@ window.addEventListener("keyup", (e) => {
       break;
   }
 });
+console.log(keys)

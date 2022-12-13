@@ -11,12 +11,12 @@ for (let i = 0; i < collisions.length; i += 70) {
 }
 
 class Boundary {
-  static width = 45;
-  static height = 45;
+  static width = 48;
+  static height = 48;
   constructor({ position }) {
-    this.position = this.position;
-    this.width = 45;
-    this.height = 45;
+    this.position = position;
+    this.width = 48;
+    this.height = 48;
   }
   draw() {
     c.fillStyle = "red";
@@ -24,23 +24,25 @@ class Boundary {
   }
 }
 
-const Boundaries = [];
+const boundaries = [];
+const offset = {
+  x: -700,
+  y: -111,
+};
 
 collisionsMap.forEach((row, i) => {
   row.forEach((symbol, j) => {
     if (symbol === 100)
-      Boundaries.push(
+      boundaries.push(
         new Boundary({
           position: {
-            x: j * Boundary.width,
-            y: i * Boundary.height,
+            x: j * Boundary.width + offset.x,
+            y: i * Boundary.heigth + offset.y,
           },
         })
       );
   });
 });
-
-console.log(Boundaries);
 
 const image = new Image();
 image.src = "./map/town.png";
@@ -61,8 +63,8 @@ class Sprite {
 
 const background = new Sprite({
   position: {
-    x: -700,
-    y: -111,
+    x: offset.x,
+    y: offset.y,
   },
   image: image,
 });
@@ -100,9 +102,8 @@ function animate() {
   else if (keys.a.pressed) background.position.x += 4.5;
   else if (keys.s.pressed) background.position.y -= 4.5;
   else if (keys.d.pressed) background.position.x -= 4.5;
-
-  Boundaries.forEach((boundary) => {
-    boundary.draw();
+  boundaries.forEach((Boundary) => {
+    Boundary.draw;
   });
 }
 

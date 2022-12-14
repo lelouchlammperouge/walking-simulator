@@ -25,9 +25,10 @@ class Boundary {
 }
 
 const boundaries = [];
+
 const offset = {
-  x: -700,
-  y: -111,
+  x: -530,
+  y: -40,
 };
 
 collisionsMap.forEach((row, i) => {
@@ -37,7 +38,7 @@ collisionsMap.forEach((row, i) => {
         new Boundary({
           position: {
             x: j * Boundary.width + offset.x,
-            y: i * Boundary.heigth + offset.y,
+            y: i * Boundary.height + offset.y,
           },
         })
       );
@@ -51,15 +52,35 @@ const playerImage = new Image();
 playerImage.src = "./img/playerDown (1).png";
 
 class Sprite {
-  constructor({ position, velocity, image }) {
+  constructor({ position, velocity, image, frames = { max: 1 } }) {
     this.position = position;
     this.image = image;
+    this.frames = frames;
   }
 
   draw() {
     c.drawImage(this.image, this.position.x, this.position.y);
+    c.drawImage(
+      this.image,
+      0,
+      0,
+      this.image.width / this.frames.max,
+      this.image.height,
+      this.position.x,
+      this.position.y,
+      this.image.width / this.frames.max,
+      this.height
+    );
   }
 }
+
+const player = new Sprite({
+  position: {
+    x: canvas.width / 2 - 192 / 4 / 2,
+    y: canvas.height / 2 - 68 / 2,
+  },
+  image: playerImage,
+});
 
 const background = new Sprite({
   position: {
@@ -67,6 +88,9 @@ const background = new Sprite({
     y: offset.y,
   },
   image: image,
+  frames: {
+    max: 4,
+  },
 });
 
 const keys = {
@@ -84,27 +108,41 @@ const keys = {
   },
 };
 
+const testBoundary = new Boundary({
+  position: {
+    x: 400,
+    y: 400,
+  },
+});
+
+const movables = [background, testBoundary];
 function animate() {
   window.requestAnimationFrame(animate);
   background.draw();
-  c.drawImage(
-    playerImage,
-    0,
-    0,
-    playerImage.width / 4,
-    playerImage.height,
-    canvas.width / 2.1,
-    canvas.height / 1.44,
-    playerImage.width / 4,
-    playerImage.height
-  );
-  if (keys.w.pressed) background.position.y += 4.5;
-  else if (keys.a.pressed) background.position.x += 4.5;
-  else if (keys.s.pressed) background.position.y -= 4.5;
-  else if (keys.d.pressed) background.position.x -= 4.5;
-  boundaries.forEach((Boundary) => {
-    Boundary.draw;
-  });
+  //boundaries.forEach((Boundary) => {
+  //Boundary.draw();
+  //});
+  testBoundary.draw();
+  player.draw();
+
+  if (player.position.x + player.width)
+    if (keys.w.pressed) {
+      movables.forEach((movable) => {
+        movable.position.y += 3;
+      });
+    } else if (keys.a.pressed) {
+      movables.forEach((movable) => {
+        movable.position.x += 3;
+      });
+    } else if (keys.s.pressed) {
+      movables.forEach((movable) => {
+        movable.position.y -= 3;
+      });
+    } else if (keys.d.pressed) {
+      movables.forEach((movable) => {
+        movable.position.x -= 3;
+      });
+    }
 }
 
 animate();

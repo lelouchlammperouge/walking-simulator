@@ -6,14 +6,14 @@ canvas.width = 1485;
 canvas.height = 720;
 
 const collisionsMap = [];
-for (let i = 0; i < collisions.length; i += 70) {
+for (let i = 0; i < collisions.length; i += 700) {
   collisionsMap.push(collisions.slice(i, 70 + i));
 }
 
 const x = [];
 
 class Boundary {
-  static width = 48;
+  static width = 49;
   static height = 48;
   constructor({ position }) {
     this.position = position;
@@ -21,21 +21,22 @@ class Boundary {
     this.height = 48;
   }
   draw() {
-    c.fillStyle = "rgba(255, 0, 0, 0)";
+    c.fillStyle = "red";
     c.fillRect(this.position.x, this.position.y, this.width, this.height);
   }
 }
+//rgba(255, 0, 0, 0)
 
 const boundaries = [];
 
 const offset = {
-  x: -530,
-  y: -40,
+  x: -1210,
+  y: -370,
 };
 
 collisionsMap.forEach((row, i) => {
   row.forEach((symbol, j) => {
-    if (symbol === 100)
+    if (symbol === 4024)
       boundaries.push(
         new Boundary({
           position: {
@@ -48,7 +49,7 @@ collisionsMap.forEach((row, i) => {
 });
 
 const image = new Image();
-image.src = "./map/town.png";
+image.src = "./map/revamped2map.png";
 
 const playerImage = new Image();
 playerImage.src = "./img/playerDown (1).png";
@@ -81,8 +82,8 @@ class Sprite {
 
 const player = new Sprite({
   position: {
-    x: canvas.width / 1.7 - 192 / 4 / 2,
-    y: canvas.height / 1.35 - 68 / 2,
+    x: canvas.width / 2 - 192 / 9 / 2,
+    y: canvas.height / 2 - 68 / 2,
   },
   image: playerImage,
   frames: {
@@ -131,7 +132,7 @@ function animate() {
     Boundary.draw();
 
     if (
-     rectangularCollision({
+      rectangularCollision({
         rectangle1: player,
         rectangle2: Boundary,
       })

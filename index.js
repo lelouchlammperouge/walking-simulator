@@ -6,8 +6,8 @@ canvas.width = 1485;
 canvas.height = 720;
 
 const collisionsMap = [];
-for (let i = 0; i < collisions.length; i += 700) {
-  collisionsMap.push(collisions.slice(i, 70 + i));
+for (let i = 0; i < collisions.length; i += 150) {
+  collisionsMap.push(collisions.slice(i, 150 + i));
 }
 
 const x = [];
@@ -36,7 +36,7 @@ const offset = {
 
 collisionsMap.forEach((row, i) => {
   row.forEach((symbol, j) => {
-    if (symbol === 4024)
+    if (symbol === 3491)
       boundaries.push(
         new Boundary({
           position: {
